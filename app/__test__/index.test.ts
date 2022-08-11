@@ -111,3 +111,17 @@ describe("delete User from database", () => {
         expect(res._body.data).toEqual(null);
     });
 })
+
+describe("GET weather data", () => {
+    it("returns status code 200 and no data property if weatherId is not given", async () => {
+        const res = await request(config.APP_KEY).get("/Weather/:WeatherId");
+        expect(res.statusCode).toEqual(200);
+        expect(res._body).not.toHaveProperty("data");
+    });
+    it("returns status code 200 and data", async () => {
+        const res = await request(config.APP_KEY).get("/Weather/201301,IN");
+        expect(res.statusCode).toEqual(200);
+        expect(res._body.success).toEqual(true);
+        expect(res._body.data).toBeTruthy();
+    })
+})
